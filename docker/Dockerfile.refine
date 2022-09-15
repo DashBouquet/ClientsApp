@@ -1,0 +1,11 @@
+FROM node:18
+WORKDIR /app
+COPY ./refine/package.json /app/refine/
+COPY ./refine/public /app/refine/public/
+COPY ./refine/src /app/refine/src/
+COPY ./refine/tsconfig.json /app/refine/
+WORKDIR /app/refine
+RUN npm install
+RUN npm run build
+EXPOSE 8000
+CMD [ "npm", "run", "start" ]

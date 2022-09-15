@@ -1,0 +1,38 @@
+- name: allowed-queries
+  definition:
+    queries:
+      - name: get_clients_pure
+        query: |
+          query get_clients_pure {
+            clients {
+              id
+              name
+              contact
+            }
+          }
+      - name: create_client_pure
+        query: |
+          mutation create_client ($client: clients_insert_input!) {
+            insert_clients_one(object: $client) {
+              id
+              name
+              contact
+            }
+          }
+      - name: create_project
+        query: |
+          mutation create_client ($project: projects_insert_input!) {
+            insert_projects_one(object: $project) {
+              id
+              project_name
+              client_id
+            }
+          }
+      - name: get_projects
+        query: |
+          query get_projects {
+            projects {
+              project_name
+              id
+            }
+          }

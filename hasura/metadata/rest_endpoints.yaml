@@ -1,0 +1,36 @@
+- comment: ""
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: get_clients_pure
+  methods:
+    - GET
+  name: get_clients_pure
+  url: clients-pure
+- comment: ""
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: create_client_pure
+  methods:
+    - POST
+  name: create_client_pure
+  url: clients-pure
+- comment: ""
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: create_project
+  methods:
+    - POST
+  name: create_project
+  url: project
+- comment: ""
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: get_projects
+  methods:
+    - GET
+  name: get_projects
+  url: projects

@@ -1,0 +1,11 @@
+table:
+  name: clients
+  schema: public
+array_relationships:
+  - name: projects
+    using:
+      foreign_key_constraint_on:
+        column: client_id
+        table:
+          name: projects
+          schema: public
