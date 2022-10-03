@@ -2,12 +2,12 @@ import { Refine } from "@pankod/refine-core";
 import {
     ReadyPage,
     notificationProvider,
-    ErrorComponent
+    ErrorComponent,
+    Layout
 } from "@pankod/refine-antd";
 import routerProvider from "@pankod/refine-react-router-v6";
 import dataProvider from "@pankod/refine-hasura";
 
-import Layout from "components/Layout";
 import { Login } from "pages/login";
 import client from "graphql-client";
 import { resources } from "pages";
@@ -23,9 +23,7 @@ export const App: React.FC = () => {
             routerProvider={routerProvider}
             LoginPage={Login}
             dataProvider={dataProvider(client)}
-            Layout={(props) => (
-                <Layout {...props} />
-            )}
+            Layout={Layout}
             ReadyPage={ReadyPage}
             notificationProvider={notificationProvider}
             catchAll={<ErrorComponent />}

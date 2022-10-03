@@ -1,5 +1,4 @@
-import {V0alpha2Api, Configuration, UiNodeInputAttributes, Session} from "@ory/client";
-import { Nullable } from "helpers/types";
+import {V0alpha2Api, Configuration, UiNodeInputAttributes} from "@ory/client";
 
 var ory = new V0alpha2Api(
   new Configuration({
@@ -10,9 +9,7 @@ var ory = new V0alpha2Api(
   }),
 );
 
-let sessions: Nullable<Session> = null;
-
-export default {
+const authProvider = {
     login: async ({ username, password }: any) => {
         try {
           const {data: loginFlow} = await ory.initializeSelfServiceLoginFlowForBrowsers(true)
@@ -31,9 +28,10 @@ export default {
           });
 
           if (session) {
-            sessions = session;
             return Promise.resolve();
           }
+
+          return Promise.reject();
         } catch {
           return Promise.reject();
         }
@@ -87,3 +85,5 @@ export default {
     getPermissions: () => Promise.resolve(),
     getUserIdentity: () => Promise.resolve(),
 }
+
+export default authProvider;
