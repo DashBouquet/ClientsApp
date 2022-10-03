@@ -1,2 +1,4 @@
 - "!include public_clients.yaml"
+- "!include public_costs.yaml"
+- "!include public_payments.yaml"
 - "!include public_projects.yaml"

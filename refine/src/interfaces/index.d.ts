@@ -10,3 +10,24 @@ export interface IProject {
     client_id: string,
     client: IClient
 }
+
+export interface IPayment {
+    id: string,
+    payment_name: string,
+    project_id: string,
+    value: string,
+    project: IProject
+}
+
+export interface ICost{
+    id: string,
+    cost_name: string,
+    project_id: string,
+    value: string,
+    project: IProject
+}
+
+export interface ILoginForm {
+    username: string;
+    password: string;
+}

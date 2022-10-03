@@ -1,6 +1,7 @@
 version: '3.6'
 services:
   postgres:
+    container_name: postgres
     image: postgres:12
     restart: always
     volumes:
@@ -10,6 +11,7 @@ services:
       POSTGRES_PASSWORD: postgrespassword
 
   graphql-engine:
+    container_name: hasura
     image: hasura/graphql-engine:v2.11.2.cli-migrations-v3
     ports:
       - "8080:8080"
@@ -41,7 +43,48 @@ services:
       - ./refine:/app/refine
       - ./refine/node_modules:/app/refine/node_modules
 
+  kratos-migrate:
+    image: oryd/kratos:v0.10.1
+    environment:
+      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true&mode=rwc
+    volumes:
+      - type: volume
+        source: kratos-sqlite
+        target: /var/lib/sqlite
+        read_only: false
+      - type: bind
+        source: ./kratos
+        target: /etc/config/kratos
+    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
+    restart: on-failure
+
+  kratos:
+    image: oryd/kratos:v0.10.1
+    ports:
+      - "4433:4433" # public
+      - "4434:4434" # admin
+    restart: unless-stopped
+    depends_on:
+      - kratos-migrate
+    environment:
+      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true
+      - LOG_LEVEL=trace
+    command:
+      serve -c /etc/config/kratos/kratos.yml --dev
+    volumes:
+      -
+        type: volume
+        source: kratos-sqlite
+        target: /var/lib/sqlite
+        read_only: false
+      -
+        type: bind
+        source: ./kratos
+        target: /etc/config/kratos
+    
+
 volumes:
   db_data:
   refinenodemodules:
+  kratos-sqlite:
 

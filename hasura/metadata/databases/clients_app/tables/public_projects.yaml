@@ -5,3 +5,18 @@ object_relationships:
   - name: client
     using:
       foreign_key_constraint_on: client_id
+array_relationships:
+  - name: costs
+    using:
+      foreign_key_constraint_on:
+        column: project_id
+        table:
+          name: costs
+          schema: public
+  - name: payments
+    using:
+      foreign_key_constraint_on:
+        column: project_id
+        table:
+          name: payments
+          schema: public
