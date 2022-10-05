@@ -28,6 +28,7 @@ const authProvider = {
           });
 
           if (session) {
+            
             return Promise.resolve();
           }
 
@@ -71,8 +72,7 @@ const authProvider = {
         }
     },
     checkAuth: async () => {
-        const {data: session} = await ory.toSession();
-
+        const {data: session } = await ory.toSession();
         return session.id ? Promise.resolve() : Promise.reject();
     },
     checkError: (error: any) => {
