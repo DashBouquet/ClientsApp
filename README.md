@@ -223,7 +223,7 @@ const ory = new V0alpha2Api(
 _Note: when `withCredentials: true` auth cookie will include in each auth request._
 
 
-Second step is reqlize webhook root business logic 
+Second step is realize webhook route business logic 
 
 ```
 await ory.toSession(undefined, req.header("cookie"));
@@ -239,7 +239,7 @@ In response you can set any data you want to congigure authorization, roles and 
 
 ## Refine
 
-Refine is a React-based framework for the rapid development of web applications. In this case we are using samples from basic [tutorial]('https://refine.dev/docs/tutorials/ant-design-tutorial/').
+Refine is a React-based framework for the rapid development of web applications. In this case we are using samples from basic [tutorial](https://refine.dev/docs/tutorials/ant-design-tutorial/).
 
 For the first step lest's initialize data provider. A data provider is the place where a refine app communicates with an API. In this case we are using GraphQL client as data provider.
 
