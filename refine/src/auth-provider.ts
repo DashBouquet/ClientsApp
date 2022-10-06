@@ -12,9 +12,9 @@ var ory = new V0alpha2Api(
 const authProvider = {
     login: async ({ username, password }: any) => {
         try {
-          const {data: loginFlow} = await ory.initializeSelfServiceLoginFlowForBrowsers(true)
+          const {data: loginFlow} = await ory.initializeSelfServiceLoginFlowForBrowsers(true);
 
-          const csrfTokenAttrs = loginFlow.ui.nodes[0].attributes as UiNodeInputAttributes
+          const csrfTokenAttrs = loginFlow.ui.nodes[0].attributes as UiNodeInputAttributes;
 
           const {data: {session}} = await ory.submitSelfServiceLoginFlow(loginFlow.id, {
             csrf_token: csrfTokenAttrs.value,

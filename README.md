@@ -10,31 +10,27 @@
     - [Request flow](#request-flow)
     - [Project structure](#project-structure)
 - [Code](#code)
+    - [Ory/Kratos](#orykratos)
+      - [Identity definition](#identity-definition)
+      - [Kratos cinfiguration](#kratos-config)
     - [Hasura definition](#hasura-definition)
-      - [Hasura authentication](#hasura-authentication)
       - [Webhook](#webhook)
     - [Refine](#refine)
       - [Resources](#resources)
       - [Resoieces file structure](#resource-file-structure)
       - [Refine authencation](#refine-authetication)
-    - [Ory/Kratos](#orykratos)
-      - [Identity definition](#identity-definition)
-      - [Kratos cinfiguration](#kratos-config)
 - [Conclusion](#conclusion)
-
 
 ## Introduction
 
-**The simple project shows how to setup ory/kratos auth for Hasura**
-
-In this article we wanna create a simple client app for managing data through Hasura graphql engine, with Ory/Kratos authentication manager.
+The main goal of this article is explain how to fast create simple applicaton for data management by using tools Refine, Hasura and Ory/Kratos
 
 ## Techstack
 
 - [Ory/Kratos](https://www.ory.sh/docs/welcome) - Headless and configurable authentication and user management.
 - [Refine](https://www.ory.sh/docs/welcome) - React-based framework for the rapid ✨ development of web applications.
 - [Hasura](https://hasura.io/) - Instant GraphQL on all your data
-- [PostgreSQL]() - PostgreSQL is a powerful, open source object-relational database system 
+- [PostgreSQL](https://www.postgresql.org/) - PostgreSQL is a powerful, open source object-relational database system 
 
 ## Usage
 
@@ -45,7 +41,7 @@ Go to the root folder
 
 `cd ClientsApp`
 
-`npm run preinstall` for install all dependencies for `webhook` and `refine`
+`npm run preinstall` for install all dependencies for `webhook` and `refine` packages
 
 run `docker-compose up`
 
@@ -68,6 +64,8 @@ kratos[Ory/Kratos]
 ```
 
 ## Request flow
+
+Thera two approaches for Hasura authentication: JWT and webhook. In this case we decided to use webhook approach
 
 ```mermaid
 flowchart TB
@@ -185,7 +183,7 @@ As we can see in docker-compose file, we have two kratos's valumes: `kratos-sqli
 
 ### Kratos identity definition
 
-Identity definition contains all properties, their definition and options of instance wich we use for login, registration, session and user's darta.
+Identity definition contains all properties, their definition and options of instance which we use for login, registration, session and user's darta.
 
 file: `./kratos/identity.schema.json`.
 
@@ -356,7 +354,7 @@ _Note: You can't put this password to client application._
 `HASURA_GRAPHQL_AUTH_HOOK: http://host.docker.internal:2000/webhook` - address of hasura authentication webhook
 `HASURA_GRAPHQL_AUTH_HOOK_MODE: GET` - Method of hasura authentication webhook _(Default= GET)_
 
-**Let's make a little bit security**
+**Let's make hasura calls authenticated**
 
 We configured the GraphQL engine. As we can see at [Request flow](#request-flow) hasura calls authentication webhook each request. So let's see webhook a little closer.
 
