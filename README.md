@@ -44,6 +44,8 @@ Go to the root folder
 
 `cd ClientsApp`
 
+`npm run preinstall` for install all dependencies for `webhook` and `refine`
+
 run `docker-compose up`
 
 ## Containers dependencies

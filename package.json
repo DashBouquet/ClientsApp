@@ -1,0 +1,20 @@
+{
+  "name": "clientsapp",
+  "version": "1.0.0",
+  "description": "The app is example how develop Ory/Kratos auth for Hasura and Client App",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "npm --prefix webhook install && npm --prefix refine install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DashBouquet/ClientsApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DashBouquet/ClientsApp/issues"
+  },
+  "homepage": "https://github.com/DashBouquet/ClientsApp#readme"
+}
