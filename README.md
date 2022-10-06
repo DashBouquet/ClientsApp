@@ -126,7 +126,7 @@ ClientsApp
 
 Hasura uses postgres DB for data storing. With variable `POSTGRES_PASSWORD` we getting DB connection URL - `PG_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres`
 
-```
+```yaml
 postgres:
     container_name: postgres
     image: postgres:12
@@ -175,7 +175,7 @@ Basically webhook is simple `express` server which handling one request.
 
 file: `./webhook/src/index.ts`
 
-```
+```typescript
 import express from "express"
 const app = express();
 const PORT = 2000;
@@ -208,7 +208,7 @@ Then we need to realize request authentication
 
 First step is ory client init: 
 
-```
+```typescript
 import {V0alpha2Api, Configuration} from "@ory/client";
 
 const ory = new V0alpha2Api(
@@ -227,7 +227,7 @@ _Note: when `withCredentials: true` auth cookie will include in each auth reques
 
 Second step is realize webhook route business logic 
 
-```
+```typescript
 await ory.toSession(undefined, req.header("cookie"));
 
 return res.send({
@@ -247,7 +247,7 @@ For the first step lest's initialize data provider. A data provider is the place
 
 file: `./refine/src/graphql-client.ts`
 
-```
+```typescript
 import {GraphQLClient} from "@pankod/refine-hasura";
 
 const API_URL = "http://localhost:8080/v1/graphql";
@@ -265,7 +265,7 @@ _Note: when `credentials: 'include'` grapql client send cookies with each reques
 
 Then we have to pass the dataProvider to the <Refine /> component.
 
-```
+```typescript
 import dataProvider from "@pankod/refine-hasura";
 
 <Refine
@@ -284,7 +284,7 @@ import dataProvider from "@pankod/refine-hasura";
 
 `resources` is the main building block of a refine app. A resource represents an entity in an endpoint in the API.
 
-```
+```typescript
 {
     name: "clients",
     show: ClientShow,
@@ -296,7 +296,7 @@ import dataProvider from "@pankod/refine-hasura";
 
 ### Resource file structure
 
-```
+```typescript
 clients/
 │   └── index.ts
 │   └── create.tsx
@@ -311,7 +311,7 @@ clients/
 Refine let's you set authentication logic by providing the `authProvider` property to the `<Refine>` component. ([more]('https://refine.dev/docs/api-reference/core/providers/auth-provider/')). 
 Also we added a custom login page (`./pages/login`)
 
-```
+```javascript
 <Refine
     authProvider={authProvider}
     LoginPage={Login}
@@ -329,7 +329,7 @@ refine authProvider definition
 
 The first step is initialize ory/kratos client to have abiltity to make auth requests to Ory/Kratos
 
-```
+```typescript
 import {V0alpha2Api, Configuration, UiNodeInputAttributes} from "@ory/client";
 
 var ory = new V0alpha2Api(
@@ -348,7 +348,7 @@ Authentication flow example:
 
 file: `./refine/src/auth-provider.ts`
 
-```
+```typescript
 login: async ({ username, password }: any) => {
     try {
         const {data: loginFlow} = await ory.initializeSelfServiceLoginFlowForBrowsers(true)
@@ -395,7 +395,7 @@ There are two containers:
   `kratos-migrate`: for migrate all necessary data for api
   `kratos`: kratos api server.
 
-```
+```yaml
 kratos-migrate:
     container_name: kratos_migrate
     image: oryd/kratos:v0.10.1
@@ -447,7 +447,7 @@ Identity definition contains all properties, their definition and options of ins
 file: `./kratos/identity.schema.json`.
 
 
-```
+```javascript
 {
   "$id": "https://schemas.ory.sh/presets/kratos/quickstart/email-password/identity.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -505,7 +505,7 @@ We have simple configuration for kratos placed at file `./kratos/kratos.yml`.
 
 The most interesting parts is cors: 
 
-```
+```yaml
 public:
     base_url: http://127.0.0.1:4433/
     cors:
@@ -531,7 +531,7 @@ public:
 
 and we need to add our identity definition
 
-```
+```yaml
 identity:
   schemas:
     - id: user
@@ -541,7 +541,7 @@ identity:
 
 Also we need to definy our self-service. Here we need just enable authentication by password
 
-```
+```yaml
 selfservice:
   default_browser_return_url: http://127.0.0.1:3000/
 
