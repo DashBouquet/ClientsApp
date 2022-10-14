@@ -26,7 +26,9 @@ app.get("/webhook", async (req, res) => {
     }    
     catch(err: any) {
         console.log(err.toJSON());
-        throw new Error(err);
+       res.send({
+            message: "ERROR"
+       })
     }
 });
 

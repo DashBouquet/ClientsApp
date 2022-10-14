@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webhook
+  name: webhook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: webhook
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: webhook
+    spec:
+      containers:
+        - args:
+            - npm
+            - run
+            - start
+          image: sorandom/webhook
+          name: webhook
+          ports:
+            - containerPort: 2000
+          resources: {}
+      restartPolicy: Always
+status: {}

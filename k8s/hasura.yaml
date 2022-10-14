@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hasura
+    hasuraService: custom
+  name: hasura
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hasura
+  template:
+    metadata:
+      labels:
+        app: hasura
+    spec:
+      containers:
+      - image: sorandom/hasura
+        imagePullPolicy: IfNotPresent
+        name: hasura
+        env:
+        - name: PG_DATABASE_URL
+          value: postgres://postgres:postgrespassword@postgres:5432/postgres
+        - name: HASURA_GRAPHQL_DATABASE_URL
+          value: postgres://postgres:postgrespassword@postgres:5432/postgres
+        - name: HASURA_GRAPHQL_ENABLE_CONSOLE
+          value: "true"
+        - name: HASURA_GRAPHQL_DEV_MODE
+          value: "true"
+        - name: HASURA_GRAPHQL_ENABLED_LOG_TYPES
+          value: startup, http-log, webhook-log, websocket-log, query-log
+        - name: HASURA_GRAPHQL_MIGRATIONS_SERVER_TIMEOUT
+          value: "10"
+        - name: HASURA_GRAPHQL_ADMIN_SECRET
+          value: myadminsecretkey
+        - name: HASURA_GRAPHQL_AUTH_HOOK
+          value: http://host.docker.internal:2000/webhook
+        - name: HASURA_GRAPHQL_AUTH_HOOK_MODE
+          value: GET
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}

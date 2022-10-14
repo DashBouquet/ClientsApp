@@ -1,0 +1,3 @@
+FROM postgres:12
+WORKDIR /
+ADD ./sql/create_tables.sql /docker-entrypoint-initdb.d/
